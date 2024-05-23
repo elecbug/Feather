@@ -8,6 +8,12 @@ namespace Feather
 
         public static int Main(string[] args)
         {
+            if (args.Length == 0)
+            {
+                ConsoleReturn("ver 0.0.0", true);
+                return Result;
+            }
+
             switch (args[0].ToLower())
             {
                 case Command.HELP: new Help(args); break;

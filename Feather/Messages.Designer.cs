@@ -70,6 +70,15 @@ namespace Feather {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The commit number is invalid.
+        /// </summary>
+        internal static string CommitNotFound {
+            get {
+                return ResourceManager.GetString("CommitNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The feather repository is not found.
         /// </summary>
         internal static string FeatherNotFound {
@@ -111,6 +120,15 @@ namespace Feather {
         internal static string SuccessInit {
             get {
                 return ResourceManager.GetString("SuccessInit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success pulling from feather.
+        /// </summary>
+        internal static string SuccessPull {
+            get {
+                return ResourceManager.GetString("SuccessPull", resourceCulture);
             }
         }
     }

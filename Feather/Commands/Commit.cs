@@ -9,9 +9,10 @@ namespace Feather.Commands
         {
             if (args.Length == 2) 
             {
+                string workspace = Program.GetWorkspace(Program.GetPath(""));
                 string name = args[1];
 
-                Info info = new Info(Path.Combine(Program.GetWorkspace(Program.GetPath("")), ".feather", "INFO"));
+                Info info = new Info(Path.Combine(workspace, ".feather", "INFO"));
 
                 Map map = new Map()
                 {
@@ -26,7 +27,6 @@ namespace Feather.Commands
 
                 try
                 {
-                    string workspace = Program.GetWorkspace(Program.GetPath(""));
                     string tempDir = Path.Combine(Path.GetTempPath(), ".feather");
 
                     info.Save(Path.Combine(workspace, ".feather", "INFO"));
@@ -84,6 +84,12 @@ namespace Feather.Commands
                 }
 
                 Info info = new Info(Path.Combine(Program.GetWorkspace(Program.GetPath("")), ".feather", "INFO"));
+
+                if (parent > info.Last)
+                {
+                    Program.ConsoleReturn(Messages.CommitNotFound, false);
+                    return;
+                }
 
                 Map map = new Map()
                 {
