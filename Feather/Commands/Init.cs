@@ -1,4 +1,4 @@
-﻿
+﻿using Feather.Structs;
 using System.IO.Compression;
 using System.Text.Json;
 
@@ -19,6 +19,7 @@ namespace Feather.Commands
             else
             {
                 Program.ConsoleReturn(Messages.InvalidCommand, false);
+                return;
             }
         }
 
@@ -29,12 +30,16 @@ namespace Feather.Commands
             try
             {
                 Program.GetWorkspace(dirPath);
+
+                Program.ConsoleReturn(Messages.AlreadyFeather, false);
+                return;
             }
             catch
             {
                 if (!Directory.Exists(dirPath))
                 {
                     Program.ConsoleReturn(Messages.InitDirNotFound, false);
+                    return;
                 }
                 else
                 {
@@ -48,11 +53,8 @@ namespace Feather.Commands
                     new Info(Path.Combine(dirPath, ".feather", "INFO"));
 
                     Program.ConsoleReturn(Messages.SuccessInit, true);
+                    return;
                 }
-            }
-            finally
-            {
-                Program.ConsoleReturn(Messages.AlreadyFeather, false);
             }
         }
     }

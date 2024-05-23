@@ -15,8 +15,7 @@ feather pull -i [INDEX]						# 버전 [INDEX]로 피더 저장소를 되돌림
 feather pull [NAME]							# 버전 이름이 [NAME]인 버전으로 피더 저장소를 되돌림
 
 feather commit [NAME]					v	# 버전 이름이 [NAME]인 피더 버전을 등록(현재 버전의 자식)
-feather commit [NAME] -p [INDEX]			# 버전 [INDEX]의 자식으로 버전 이름이 [NAME]인 피더 버전을 등록
-feather commit [NAME] -p [P_NAME]			# 버전 이름이 [P_NAME]인 버전의 자식으로 버전 이름이 [NAME]인 피더 버전을 등록
+feather commit [NAME] -p [INDEX]		v	# 버전 [INDEX]의 자식으로 버전 이름이 [NAME]인 피더 버전을 등록
 
 feather del [NAME]							# 버전 이름이 [NAME]인 버전을 삭제
 feather del -i [INDEX]						# 버전 [INDEX]를 삭제

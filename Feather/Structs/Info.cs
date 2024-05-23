@@ -5,13 +5,14 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Feather
+namespace Feather.Structs
 {
     public class Map
     {
         public required string Name { get; set; }
         public required int Index { get; set; }
-        public required int Parent {  get; set; }
+        public required int Parent { get; set; }
+        public string Time { get; set; } = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
     }
 
     public class Info
@@ -31,14 +32,14 @@ namespace Feather
                     writer.Write(JsonSerializer.Serialize(this));
                 }
             }
-            else 
+            else
             {
                 using (StreamReader reader = new StreamReader(filePath))
                 {
                     string line = reader.ReadToEnd();
                     Info? info = JsonSerializer.Deserialize<Info>(line);
 
-                    if (info == null) 
+                    if (info == null)
                     {
                         throw new Exception("File is currupted");
                     }
