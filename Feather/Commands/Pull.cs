@@ -3,9 +3,9 @@ using System.IO.Compression;
 
 namespace Feather.Commands
 {
-    public class Get
+    public class Pull
     {
-        public Get(string[] args)
+        public Pull(string[] args)
         {
             try
             {
@@ -17,12 +17,11 @@ namespace Feather.Commands
                 return;
             }
 
-            if (args.Length == 4)
+            if (args.Length == 3)
             {
                 if (args[1] == Command.INDEX_FLAG)
                 {
                     string workspace = Program.GetWorkspace(Program.GetPath(""));
-                    string path = Program.GetPath(args[3]);
                     int index;
 
                     if (!int.TryParse(args[2], out index))
@@ -43,29 +42,34 @@ namespace Feather.Commands
 
                     info.Save(Path.Combine(workspace, ".feather", "INFO"));
 
-                    if (Directory.Exists(path))
+                    string beforeCurrent = Environment.CurrentDirectory;
+                    Environment.CurrentDirectory = Program.GetWorkspace(Program.GetPath(""));
+
+                    DirectoryInfo dirInfo = new DirectoryInfo(Program.GetWorkspace(Program.GetPath("")));
+                    
+                    foreach (DirectoryInfo dir in dirInfo.GetDirectories())
                     {
-                        try
-                        {
-                            Directory.Delete(path, true);
-                        }
-                        catch
-                        {
-                            Program.ConsoleReturn(Messages.FailPull, false);
-                            return;
-                        }
+                        if (dir.Name == ".feather")
+                            continue;
+                        else 
+                            dir.Delete(true);
+                    }
+                    foreach (FileInfo file in dirInfo.GetFiles())
+                    {
+                        file.Delete();
                     }
 
-                    Directory.CreateDirectory(path);
-                    Directory.CreateDirectory(Path.Combine(path, ".feather"));
-
                     string zip = Path.Combine(Program.GetWorkspace(Program.GetPath("")), ".feather", index.ToString());
-                    ZipFile.ExtractToDirectory(zip, path);
+                    ZipFile.ExtractToDirectory(zip, Environment.CurrentDirectory);
 
-                    CopyFilesRecursively(Path.Combine(Program.GetWorkspace(Program.GetPath("")), ".feather"), Path.Combine(path, ".feather"));
-
-                    DirectoryInfo infoFeather = new DirectoryInfo(Path.Combine(path, ".feather"));
-                    infoFeather.Attributes |= FileAttributes.Hidden;
+                    try
+                    {
+                        Environment.CurrentDirectory = beforeCurrent;
+                    }
+                    catch
+                    {
+                        Environment.CurrentDirectory = Program.GetWorkspace(Program.GetPath(""));
+                    }
 
                     Program.ConsoleReturn(Messages.SuccessPull, true);
                     return;

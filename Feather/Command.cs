@@ -12,7 +12,7 @@ namespace Feather
         public const string INIT = "init";
         public const string LOG = "log";
         public const string SHOW = "show";
-        public const string GET = "get";
+        public const string PULL = "pull";
         public const string COMMIT = "commit";
         public const string DEL = "del";
 
