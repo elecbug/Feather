@@ -117,11 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AlreadyFeather" xml:space="preserve">
+    <value>Already the feather repository on path</value>
+  </data>
+  <data name="FeatherNotFound" xml:space="preserve">
+    <value>The feather repository is not found</value>
+  </data>
   <data name="InitDirNotFound" xml:space="preserve">
     <value>The path is not found</value>
   </data>
   <data name="InvalidCommand" xml:space="preserve">
     <value>Command is invalid (more, "feather help")</value>
+  </data>
+  <data name="SuccessCommit" xml:space="preserve">
+    <value>Success the commit</value>
   </data>
   <data name="SuccessInit" xml:space="preserve">
     <value>Generate new feather repository</value>

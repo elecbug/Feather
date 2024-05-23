@@ -61,6 +61,24 @@ namespace Feather {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Already the feather repository on path.
+        /// </summary>
+        internal static string AlreadyFeather {
+            get {
+                return ResourceManager.GetString("AlreadyFeather", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The feather repository is not found.
+        /// </summary>
+        internal static string FeatherNotFound {
+            get {
+                return ResourceManager.GetString("FeatherNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The path is not found.
         /// </summary>
         internal static string InitDirNotFound {
@@ -75,6 +93,15 @@ namespace Feather {
         internal static string InvalidCommand {
             get {
                 return ResourceManager.GetString("InvalidCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success the commit.
+        /// </summary>
+        internal static string SuccessCommit {
+            get {
+                return ResourceManager.GetString("SuccessCommit", resourceCulture);
             }
         }
         

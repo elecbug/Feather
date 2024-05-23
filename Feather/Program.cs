@@ -32,5 +32,28 @@ namespace Feather
             Console.WriteLine(message);
             Result = successed ? 0 : -1;
         }
+
+        public static string GetWorkspace(string path)
+        {
+            DirectoryInfo info = new DirectoryInfo(path);
+
+            DirectoryInfo? get = info.GetDirectories().FirstOrDefault(x => x.Name == ".feather");
+
+            if (get != null)
+            {
+                return info.FullName;
+            }
+            else
+            {
+                if (info.Parent != null)
+                {
+                    return GetWorkspace(info.Parent.FullName);
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+        }
     }
 }

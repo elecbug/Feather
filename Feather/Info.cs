@@ -10,20 +10,20 @@ namespace Feather
     public class Map
     {
         public required string Name { get; set; }
-        public required string Index { get; set; }
+        public required int Index { get; set; }
+        public required int Parent {  get; set; }
     }
 
     public class Info
     {
-        public string Current { get; set; } = "0";
-        public List<Map> Maps { get; set; } = new List<Map>() { new Map() { Name = "INIT", Index = "0" } };
+        public int Current { get; set; } = 0;
+        public int Last { get; set; } = 0;
+        public List<Map> Maps { get; set; } = new List<Map>() { new Map() { Name = "INIT", Index = 0, Parent = -1 } };
 
-        private string _filePath;
+        public Info() { }
 
         public Info(string filePath)
         {
-            _filePath = filePath;
-
             if (!File.Exists(filePath))
             {
                 using (StreamWriter writer = new StreamWriter(filePath))
@@ -46,14 +46,15 @@ namespace Feather
                     {
                         Current = info.Current;
                         Maps = info.Maps;
+                        Last = info.Last;
                     }
                 }
             }
         }
 
-        public void Save()
+        public void Save(string filePath)
         {
-            using (StreamWriter writer = new StreamWriter(_filePath))
+            using (StreamWriter writer = new StreamWriter(filePath))
             {
                 string json = JsonSerializer.Serialize(this);
                 writer.Write(json);

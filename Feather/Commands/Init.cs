@@ -26,22 +26,33 @@ namespace Feather.Commands
         {
             // Console.WriteLine(new DirectoryInfo(dirPath).FullName);
 
-            if (!Directory.Exists(dirPath))
+            try
             {
-                Program.ConsoleReturn(Messages.InitDirNotFound, false);
+                Program.GetWorkspace(dirPath);
             }
-            else
+            catch
             {
-                ZipFile.CreateFromDirectory(dirPath, Path.Combine(Environment.CurrentDirectory, "0"));
+                if (!Directory.Exists(dirPath))
+                {
+                    Program.ConsoleReturn(Messages.InitDirNotFound, false);
+                }
+                else
+                {
+                    ZipFile.CreateFromDirectory(dirPath, Path.Combine(Path.GetTempPath(), "0"));
 
-                DirectoryInfo dirInfo = Directory.CreateDirectory(Path.Combine(dirPath, ".feather"));
-                dirInfo.Attributes |= FileAttributes.Hidden;
+                    DirectoryInfo dirInfo = Directory.CreateDirectory(Path.Combine(dirPath, ".feather"));
+                    dirInfo.Attributes |= FileAttributes.Hidden;
 
-                File.Move(Path.Combine(Environment.CurrentDirectory, "0"), Path.Combine(dirPath, ".feather", "0"));
+                    File.Move(Path.Combine(Path.GetTempPath(), "0"), Path.Combine(dirPath, ".feather", "0"));
 
-                new Info(Path.Combine(dirPath, ".feather", "INFO"));
+                    new Info(Path.Combine(dirPath, ".feather", "INFO"));
 
-                Program.ConsoleReturn(Messages.SuccessInit, true);
+                    Program.ConsoleReturn(Messages.SuccessInit, true);
+                }
+            }
+            finally
+            {
+                Program.ConsoleReturn(Messages.AlreadyFeather, false);
             }
         }
     }
