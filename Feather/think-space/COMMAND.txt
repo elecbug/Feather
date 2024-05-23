@@ -11,7 +11,7 @@ feather log [NAME]						v	# 버전 이름이 [NAME] 조건에 해당하는 버�
 feather show -i [INDEX]:[FILE_PATH]			# 버전 [INDEX]의 [FILE_PATH]에 위치한 파일의 내용을 출력
 feather show [NAME]:[FILE_PATH]				# 버전 이름이 [NAME]인 버전의 [FILE_PATH]에 위치한 파일의 내용을 출력
 
-feather pull -i [INDEX]					v	# 버전 [INDEX]로 피더 저장소를 되돌림
+feather get -i [INDEX] [PATH]			v	# 버전 [INDEX] 피더 저장소를 [PATH]에 복사
 
 feather commit [NAME]					v	# 버전 이름이 [NAME]인 피더 버전을 등록(현재 버전의 자식)
 feather commit [NAME] -p [INDEX]		v	# 버전 [INDEX]의 자식으로 버전 이름이 [NAME]인 피더 버전을 등록

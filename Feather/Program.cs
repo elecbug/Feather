@@ -19,7 +19,7 @@ namespace Feather
                 case Command.HELP: new Help(args); break;
                 case Command.INIT: new Init(args); break;
                 case Command.DEL: new Del(args); break;
-                case Command.PULL: new Pull(args); break;
+                case Command.GET: new Get(args); break;
                 case Command.SHOW: new Show(args); break;
                 case Command.COMMIT: new Commit(args); break;
                 case Command.LOG: new Log(args); break;
