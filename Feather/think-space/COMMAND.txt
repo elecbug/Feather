@@ -1,0 +1,22 @@
+﻿feather init							v	# 현재 경로를 피더 저장소로 초기화
+feather init [PATH]						v	# [PATH]를 피더 저장소로 초기화
+feather init -m [MOUNT_PATH]				# 현재 경로를 피더 저장소로 초기화하며 백업을 [MOUNT_PATH]에 기록 
+feather init -m [MOUNT_PATH] [PATH]			# [PATH]를 피더 저장소로 초기화하며 백업을 [MOUNT_PATH]에 기록
+
+feather log -a								# 모든 버전의 구조를 보여줌
+feather log -i [INDEX]						# 버전 [INDEX]의 버전 구조를 보여줌
+feather log -i [INDEX_1]~[INDEX_2]			# 버전 [INDEX_1]부터 버전 [INDEX_2]까지의 버전들의 구조를 보여줌
+feather log [NAME]							# 버전 이름이 [NAME]인 버전의 구조를 보여줌
+
+feather show -i [INDEX]:[FILE_PATH]			# 버전 [INDEX]의 [FILE_PATH]에 위치한 파일의 내용을 출력
+feather show [NAME]:[FILE_PATH]				# 버전 이름이 [NAME]인 버전의 [FILE_PATH]에 위치한 파일의 내용을 출력
+
+feather pull -i [INDEX]						# 버전 [INDEX]로 피더 저장소를 되돌림
+feather pull [NAME]							# 버전 이름이 [NAME]인 버전으로 피더 저장소를 되돌림
+
+feather commit [NAME]						# 버전 이름이 [NAME]인 피더 버전을 등록(현재 버전의 자식)
+feather commit [NAME] -p [INDEX]			# 버전 [INDEX]의 자식으로 버전 이름이 [NAME]인 피더 버전을 등록
+feather commit [NAME] -p [P_NAME]			# 버전 이름이 [P_NAME]인 버전의 자식으로 버전 이름이 [NAME]인 피더 버전을 등록
+
+feather del [NAME]							# 버전 이름이 [NAME]인 버전을 삭제
+feather del -i [INDEX]						# 버전 [INDEX]를 삭제
