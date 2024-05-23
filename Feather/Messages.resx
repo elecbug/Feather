@@ -123,6 +123,9 @@
   <data name="CommitNotFound" xml:space="preserve">
     <value>The commit number is invalid</value>
   </data>
+  <data name="FailPull" xml:space="preserve">
+    <value>Fail to pull</value>
+  </data>
   <data name="FeatherNotFound" xml:space="preserve">
     <value>The feather repository is not found</value>
   </data>

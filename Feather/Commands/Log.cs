@@ -8,6 +8,16 @@ namespace Feather.Commands
     {
         public Log(string[] args)
         {
+            try
+            {
+                Program.GetWorkspace(Program.GetPath(""));
+            }
+            catch
+            {
+                Program.ConsoleReturn(Messages.FeatherNotFound, false);
+                return;
+            }
+
             if (args.Length == 2)
             {
                 if (args[1] == Command.ALL_FLAG)

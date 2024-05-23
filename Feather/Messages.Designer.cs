@@ -79,6 +79,15 @@ namespace Feather {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fail to pull.
+        /// </summary>
+        internal static string FailPull {
+            get {
+                return ResourceManager.GetString("FailPull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The feather repository is not found.
         /// </summary>
         internal static string FeatherNotFound {

@@ -7,7 +7,17 @@ namespace Feather.Commands
     {
         public Commit(string[] args)
         {
-            if (args.Length == 2) 
+            try
+            {
+                Program.GetWorkspace(Program.GetPath(""));
+            }
+            catch
+            {
+                Program.ConsoleReturn(Messages.FeatherNotFound, false);
+                return;
+            }
+
+            if (args.Length == 2)
             {
                 string workspace = Program.GetWorkspace(Program.GetPath(""));
                 string name = args[1];
@@ -38,15 +48,15 @@ namespace Feather.Commands
 
                     Directory.Move(Path.Combine(workspace, ".feather"), tempDir);
 
-                    ZipFile.CreateFromDirectory(workspace, 
+                    ZipFile.CreateFromDirectory(workspace,
                         Path.Combine(Path.GetTempPath(), ".feather", map.Index.ToString()));
 
                     Directory.Move(tempDir, Path.Combine(workspace, ".feather"));
-                    
+
                     Program.ConsoleReturn(Messages.SuccessCommit, true);
                     return;
                 }
-                catch 
+                catch
                 {
                     Program.ConsoleReturn(Messages.FeatherNotFound, false);
                     return;
@@ -102,33 +112,25 @@ namespace Feather.Commands
                 info.Last = map.Index;
                 info.Current = map.Index;
 
-                try
+                string workspace = Program.GetWorkspace(Program.GetPath(""));
+                string tempDir = Path.Combine(Path.GetTempPath(), ".feather");
+
+                info.Save(Path.Combine(workspace, ".feather", "INFO"));
+
+                if (Directory.Exists(tempDir))
                 {
-                    string workspace = Program.GetWorkspace(Program.GetPath(""));
-                    string tempDir = Path.Combine(Path.GetTempPath(), ".feather");
-
-                    info.Save(Path.Combine(workspace, ".feather", "INFO"));
-
-                    if (Directory.Exists(tempDir))
-                    {
-                        Directory.Delete(tempDir, true);
-                    }
-
-                    Directory.Move(Path.Combine(workspace, ".feather"), tempDir);
-
-                    ZipFile.CreateFromDirectory(workspace,
-                        Path.Combine(Path.GetTempPath(), ".feather", map.Index.ToString()));
-
-                    Directory.Move(tempDir, Path.Combine(workspace, ".feather"));
-
-                    Program.ConsoleReturn(Messages.SuccessCommit, true);
-                    return;
+                    Directory.Delete(tempDir, true);
                 }
-                catch
-                {
-                    Program.ConsoleReturn(Messages.FeatherNotFound, false);
-                    return;
-                }
+
+                Directory.Move(Path.Combine(workspace, ".feather"), tempDir);
+
+                ZipFile.CreateFromDirectory(workspace,
+                    Path.Combine(Path.GetTempPath(), ".feather", map.Index.ToString()));
+
+                Directory.Move(tempDir, Path.Combine(workspace, ".feather"));
+
+                Program.ConsoleReturn(Messages.SuccessCommit, true);
+                return;
             }
             else
             {
