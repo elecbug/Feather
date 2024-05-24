@@ -97,6 +97,15 @@ namespace Feather {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The file is not found.
+        /// </summary>
+        internal static string FileNotFound {
+            get {
+                return ResourceManager.GetString("FileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The path is not found.
         /// </summary>
         internal static string InitDirNotFound {

@@ -12,7 +12,7 @@ namespace Feather.Structs
         public required string Name { get; set; }
         public required int Index { get; set; }
         public required int Parent { get; set; }
-        public string Time { get; set; } = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+        public string Time { get; set; } = DateTime.Now.ToString("yyyy.MM.dd. HH:mm:ss");
     }
 
     public class Info

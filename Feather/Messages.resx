@@ -129,6 +129,9 @@
   <data name="FeatherNotFound" xml:space="preserve">
     <value>The feather repository is not found</value>
   </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>The file is not found</value>
+  </data>
   <data name="InitDirNotFound" xml:space="preserve">
     <value>The path is not found</value>
   </data>

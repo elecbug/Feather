@@ -1,5 +1,6 @@
 ﻿using Feather.Extesions;
 using Feather.Structs;
+using System;
 using System.IO.Compression;
 
 namespace Feather.Commands
@@ -53,8 +54,37 @@ namespace Feather.Commands
 
                     for (int i = 0; i < maps.Count; i++)
                     {
-                        Console.WriteLine($"[{maps[i].Time}] {maps[i].Index.ToString().PadLeft(idx)}: " +
-                            $"\"{maps[i].Name}\" by {(maps[i].Parent != -1 ? maps[i].Parent.ToString() : "ROOT")}");
+                        string tempDir = Path.Combine(Path.GetTempPath(), "temp");
+
+                        if (Directory.Exists(tempDir))
+                        {
+                            Directory.Delete(tempDir, true);
+                        }
+
+                        string zip = Path.Combine(Program.GetWorkspace(Program.GetPath("")), ".feather", i.ToString());
+
+                        if (!File.Exists(zip))
+                        {
+                            Program.ConsoleReturn(Messages.CommitNotFound, false);
+                            return;
+                        }
+
+                        ZipFile.ExtractToDirectory(zip, tempDir);
+
+                        DirectoryInfo dirInfo = new DirectoryInfo(tempDir);
+
+                        if (dirInfo.Exists)
+                        {
+                            Console.WriteLine($"[{maps[i].Time}] {maps[i].Index.ToString().PadLeft(idx)}: " +
+                                $"\"{maps[i].Name}\" by {(maps[i].Parent != -1 ? maps[i].Parent.ToString() : "ROOT")}");
+                            ShowDir(dirInfo, 1, new List<int>());
+
+                            Directory.Delete(tempDir, true);
+                        }
+                        else
+                        {
+                            Console.WriteLine("This commit is empty");
+                        }
                     }
                 }
             }
@@ -63,42 +93,65 @@ namespace Feather.Commands
                 if (args[1] == Command.INDEX_FLAG)
                 {
                     int index;
-                    
+                    int to = 0;
+
                     if (!int.TryParse(args[2], out index))
                     {
-                        Program.ConsoleReturn(Messages.InvalidCommand, false);
-                        return;
+                        if (args[2].Contains('~'))
+                        {
+                            string[] indexes = args[2].Split('~');
+
+                            if (indexes.Length != 2 ||
+                                !int.TryParse(indexes[0], out index) || !int.TryParse(indexes[1], out to))
+                            {
+                                Program.ConsoleReturn(Messages.InvalidCommand, false);
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            Program.ConsoleReturn(Messages.InvalidCommand, false);
+                            return;
+                        }
                     }
 
-                    string tempDir = Path.Combine(Path.GetTempPath(), "temp");
+                    string workspace = Path.Combine(Program.GetWorkspace(Program.GetPath("")), ".feather", "INFO");
+                    Info info = new Info(workspace);
+                    int idx = (int)Math.Ceiling(Math.Log10(to));
 
-                    if (Directory.Exists(tempDir))
+                    for (int i = index; i < index + to + 1; i++)
                     {
-                        Directory.Delete(tempDir, true);
-                    }
+                        string tempDir = Path.Combine(Path.GetTempPath(), "temp");
 
-                    string zip = Path.Combine(Program.GetWorkspace(Program.GetPath("")), ".feather", index.ToString());
+                        if (Directory.Exists(tempDir))
+                        {
+                            Directory.Delete(tempDir, true);
+                        }
 
-                    if (!File.Exists(zip))
-                    {
-                        Program.ConsoleReturn(Messages.CommitNotFound, false);
-                        return;
-                    }
+                        string zip = Path.Combine(Program.GetWorkspace(Program.GetPath("")), ".feather", i.ToString());
 
-                    ZipFile.ExtractToDirectory(zip, tempDir);
+                        if (!File.Exists(zip))
+                        {
+                            Program.ConsoleReturn(Messages.CommitNotFound, false);
+                            return;
+                        }
 
-                    DirectoryInfo info = new DirectoryInfo(tempDir);
+                        ZipFile.ExtractToDirectory(zip, tempDir);
 
-                    if (info.Exists)
-                    {
-                        Console.WriteLine(new DirectoryInfo(Program.GetWorkspace(Program.GetPath(""))).Name);
-                        ShowDir(info, 1, new List<int>());
+                        DirectoryInfo dirInfo = new DirectoryInfo(tempDir);
 
-                        Directory.Delete(tempDir, true);
-                    }
-                    else
-                    {
-                        Console.WriteLine("This commit is empty");
+                        if (dirInfo.Exists)
+                        {
+                            Console.WriteLine($"[{info.Maps[i].Time}] {info.Maps[i].Index.ToString().PadLeft(idx)}: " +
+                                $"\"{info.Maps[i].Name}\" by {(info.Maps[i].Parent != -1 ? info.Maps[i].Parent.ToString() : "ROOT")}");
+                            ShowDir(dirInfo, 1, new List<int>());
+
+                            Directory.Delete(tempDir, true);
+                        }
+                        else
+                        {
+                            Console.WriteLine("This commit is empty");
+                        }
                     }
                 }
             }
