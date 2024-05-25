@@ -1,4 +1,5 @@
 ﻿using Feather.Extesions;
+using Feather.Resources;
 using Feather.Structs;
 using System;
 using System.IO.Compression;
@@ -83,6 +84,8 @@ namespace Feather.Commands
                         }
                         else
                         {
+                            Console.WriteLine($"[{maps[i].Time}] {maps[i].Index.ToString().PadLeft(idx)}: " +
+                                $"\"{maps[i].Name}\" by {(maps[i].Parent != -1 ? maps[i].Parent.ToString() : "ROOT")}");
                             Console.WriteLine("This commit is empty");
                         }
                     }
@@ -114,10 +117,14 @@ namespace Feather.Commands
                             return;
                         }
                     }
+                    else
+                    {
+                        to = index;
+                    }
 
                     string workspace = Path.Combine(Program.GetWorkspace(Program.GetPath("")), ".feather", "INFO");
                     Info info = new Info(workspace);
-                    int idx = (int)Math.Ceiling(Math.Log10(to));
+                    int idx = (int)Math.Ceiling(Math.Log10(info.Maps.Count));
 
                     for (int i = index; i < index + to + 1; i++)
                     {
@@ -150,6 +157,8 @@ namespace Feather.Commands
                         }
                         else
                         {
+                            Console.WriteLine($"[{info.Maps[i].Time}] {info.Maps[i].Index.ToString().PadLeft(idx)}: " +
+                                $"\"{info.Maps[i].Name}\" by {(info.Maps[i].Parent != -1 ? info.Maps[i].Parent.ToString() : "ROOT")}");
                             Console.WriteLine("This commit is empty");
                         }
                     }

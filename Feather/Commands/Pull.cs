@@ -1,4 +1,5 @@
-﻿using Feather.Structs;
+﻿using Feather.Resources;
+using Feather.Structs;
 using System.IO.Compression;
 
 namespace Feather.Commands

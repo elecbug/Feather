@@ -1,4 +1,5 @@
-﻿using Feather.Structs;
+﻿using Feather.Resources;
+using Feather.Structs;
 using System.IO.Compression;
 using System.Text.Json;
 
@@ -25,8 +26,6 @@ namespace Feather.Commands
 
         private void CreateFeatherRepository(string dirPath)
         {
-            // Console.WriteLine(new DirectoryInfo(dirPath).FullName);
-
             try
             {
                 Program.GetWorkspace(dirPath);

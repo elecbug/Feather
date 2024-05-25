@@ -1,4 +1,6 @@
-﻿namespace Feather.Commands
+﻿using Feather.Resources;
+
+namespace Feather.Commands
 {
     public class Del
     {
