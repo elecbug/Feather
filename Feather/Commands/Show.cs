@@ -71,7 +71,7 @@ namespace Feather.Commands
                     //Console.WriteLine("Run " + Path.Combine(tempDir, file));
                     Process.Start(new ProcessStartInfo()
                     {
-                        FileName = "CMD.exe",
+                        FileName = "CMD",
                         Arguments = "/C " + Path.Combine(tempDir, file),
                     });
 
