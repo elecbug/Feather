@@ -31,6 +31,11 @@ namespace Feather.Structs
         /// 현재 버전을 저장한 시각
         /// </summary>
         public string Time { get; set; } = DateTime.Now.ToString("yyyy.MM.dd. HH:mm:ss");
+
+        /// <summary>
+        /// 삭제 되었는지 여부
+        /// </summary>
+        public bool D { get; set; } = false;
     }
 
     /// <summary>

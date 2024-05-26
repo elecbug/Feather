@@ -15,4 +15,4 @@ feather pull -i [INDEX]					v	# 버전 [INDEX] 피더 저장소를 복사
 feather commit [NAME]					v	# 버전 이름이 [NAME]인 피더 버전을 등록(현재 버전의 자식)
 feather commit [NAME] -p [INDEX]		v	# 버전 [INDEX]의 자식으로 버전 이름이 [NAME]인 피더 버전을 등록
 
-feather del -i [INDEX]						# 버전 [INDEX]를 삭제
+feather del -i [INDEX]					v	# 버전 [INDEX]를 삭제
