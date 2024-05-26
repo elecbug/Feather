@@ -120,8 +120,17 @@
   <data name="AlreadyFeather" xml:space="preserve">
     <value>Already the feather repository on path</value>
   </data>
+  <data name="CommitDeleted" xml:space="preserve">
+    <value>This commit is deleted</value>
+  </data>
+  <data name="CommitEmpty" xml:space="preserve">
+    <value>This commit is empty</value>
+  </data>
   <data name="CommitNotFound" xml:space="preserve">
     <value>The commit number is invalid</value>
+  </data>
+  <data name="DoNotDelCurrent" xml:space="preserve">
+    <value>Do not delete current feather version</value>
   </data>
   <data name="FailPull" xml:space="preserve">
     <value>Fail to pull</value>
@@ -140,6 +149,9 @@
   </data>
   <data name="SuccessCommit" xml:space="preserve">
     <value>Success the commit</value>
+  </data>
+  <data name="SuccessDelete" xml:space="preserve">
+    <value>Success delete the feather version</value>
   </data>
   <data name="SuccessInit" xml:space="preserve">
     <value>Generate new feather repository</value>

@@ -70,11 +70,38 @@ namespace Feather.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This commit is deleted.
+        /// </summary>
+        internal static string CommitDeleted {
+            get {
+                return ResourceManager.GetString("CommitDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This commit is empty.
+        /// </summary>
+        internal static string CommitEmpty {
+            get {
+                return ResourceManager.GetString("CommitEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The commit number is invalid.
         /// </summary>
         internal static string CommitNotFound {
             get {
                 return ResourceManager.GetString("CommitNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do not delete current feather version.
+        /// </summary>
+        internal static string DoNotDelCurrent {
+            get {
+                return ResourceManager.GetString("DoNotDelCurrent", resourceCulture);
             }
         }
         
@@ -129,6 +156,15 @@ namespace Feather.Resources {
         internal static string SuccessCommit {
             get {
                 return ResourceManager.GetString("SuccessCommit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success delete the feather version.
+        /// </summary>
+        internal static string SuccessDelete {
+            get {
+                return ResourceManager.GetString("SuccessDelete", resourceCulture);
             }
         }
         

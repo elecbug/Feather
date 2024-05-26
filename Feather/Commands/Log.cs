@@ -32,8 +32,11 @@ namespace Feather.Commands
                     for (int i = 0; i < info.Maps.Count; i++)
                     {
                         Console.WriteLine($"[{info.Maps[i].Time}] {info.Maps[i].Index.ToString().PadLeft(idx)}: " +
-                            $"\"{info.Maps[i].Name}\" by {(info.Maps[i].Parent != -1 ? info.Maps[i].Parent.ToString() : "ROOT")}");
+                            $"\"{info.Maps[i].Name}\" from {(info.Maps[i].Parent != -1 ? info.Maps[i].Parent.ToString() : "ROOT")} " +
+                            $"{(info.Maps[i].D ? "[DELETED]" : "")}");
                     }
+
+                    Console.WriteLine();
                 }
                 else
                 {
@@ -45,9 +48,9 @@ namespace Feather.Commands
 
                     for (int i = 0; i < info.Maps.Count; i++)
                     {
-                        if (info.Maps[i].Name.ContainsLike(name))
+                        if (info.Maps[i]!.Name.ContainsLike(name))
                         {
-                            maps.Add(info.Maps[i]);
+                            maps.Add(info.Maps[i]!);
                         }
                     }
 
@@ -64,31 +67,40 @@ namespace Feather.Commands
 
                         string zip = Path.Combine(Program.GetWorkspace(Program.GetPath("")), ".feather", i.ToString());
 
-                        if (!File.Exists(zip))
+                        if (!File.Exists(zip) && info.Maps.FirstOrDefault(x => x.Index == i) != null)
                         {
-                            Program.ConsoleReturn(Messages.CommitNotFound, false);
-                            return;
-                        }
-
-                        ZipFile.ExtractToDirectory(zip, tempDir);
-
-                        DirectoryInfo dirInfo = new DirectoryInfo(tempDir);
-
-                        if (dirInfo.Exists)
-                        {
-                            Console.WriteLine($"[{maps[i].Time}] {maps[i].Index.ToString().PadLeft(idx)}: " +
-                                $"\"{maps[i].Name}\" by {(maps[i].Parent != -1 ? maps[i].Parent.ToString() : "ROOT")}");
-                            ShowDir(dirInfo, 1, new List<int>());
-
-                            Directory.Delete(tempDir, true);
+                            Console.WriteLine($"[{info.Maps[i].Time}] {info.Maps[i].Index.ToString().PadLeft(idx)}: " +
+                                $"\"{info.Maps[i].Name}\" from {(info.Maps[i].Parent != -1 ? info.Maps[i].Parent.ToString() : "ROOT")} " +
+                                $"{(info.Maps[i].D ? "[DELETED]" : "")}");
                         }
                         else
                         {
-                            Console.WriteLine($"[{maps[i].Time}] {maps[i].Index.ToString().PadLeft(idx)}: " +
-                                $"\"{maps[i].Name}\" by {(maps[i].Parent != -1 ? maps[i].Parent.ToString() : "ROOT")}");
-                            Console.WriteLine("This commit is empty");
+                            ZipFile.ExtractToDirectory(zip, tempDir);
+
+                            DirectoryInfo dirInfo = new DirectoryInfo(tempDir);
+
+                            if (dirInfo.Exists)
+                            {
+                                Console.WriteLine($"[{info.Maps[i].Time}] {info.Maps[i].Index.ToString().PadLeft(idx)}: " +
+                                    $"\"{info.Maps[i].Name}\" from {(info.Maps[i].Parent != -1 ? info.Maps[i].Parent.ToString() : "ROOT")} " +
+                                    $"{(info.Maps[i].D ? "[DELETED]" : "")}");
+
+                                ShowDir(dirInfo, 1, new List<int>());
+
+                                Directory.Delete(tempDir, true);
+                            }
+                            else
+                            {
+                                Console.WriteLine($"[{info.Maps[i].Time}] {info.Maps[i].Index.ToString().PadLeft(idx)}: " +
+                                    $"\"{info.Maps[i].Name}\" from {(info.Maps[i].Parent != -1 ? info.Maps[i].Parent.ToString() : "ROOT")} " +
+                                    $"{(info.Maps[i].D ? "[DELETED]" : "")}");
+
+                                Console.WriteLine(Messages.CommitEmpty);
+                            }
                         }
                     }
+
+                    Console.WriteLine();
                 }
             }
             else if (args.Length == 3)
@@ -96,7 +108,7 @@ namespace Feather.Commands
                 if (args[1] == Command.INDEX_FLAG)
                 {
                     int index;
-                    int to = 0;
+                    int to;
 
                     if (!int.TryParse(args[2], out index))
                     {
@@ -126,7 +138,7 @@ namespace Feather.Commands
                     Info info = new Info(workspace);
                     int idx = (int)Math.Ceiling(Math.Log10(info.Maps.Count));
 
-                    for (int i = index; i < index + to + 1; i++)
+                    for (int i = index; i < to + 1; i++)
                     {
                         string tempDir = Path.Combine(Path.GetTempPath(), "temp");
 
@@ -137,31 +149,40 @@ namespace Feather.Commands
 
                         string zip = Path.Combine(Program.GetWorkspace(Program.GetPath("")), ".feather", i.ToString());
 
-                        if (!File.Exists(zip))
-                        {
-                            Program.ConsoleReturn(Messages.CommitNotFound, false);
-                            return;
-                        }
-
-                        ZipFile.ExtractToDirectory(zip, tempDir);
-
-                        DirectoryInfo dirInfo = new DirectoryInfo(tempDir);
-
-                        if (dirInfo.Exists)
+                        if (!File.Exists(zip) && info.Maps.FirstOrDefault(x=>x.Index == i) != null)
                         {
                             Console.WriteLine($"[{info.Maps[i].Time}] {info.Maps[i].Index.ToString().PadLeft(idx)}: " +
-                                $"\"{info.Maps[i].Name}\" by {(info.Maps[i].Parent != -1 ? info.Maps[i].Parent.ToString() : "ROOT")}");
-                            ShowDir(dirInfo, 1, new List<int>());
-
-                            Directory.Delete(tempDir, true);
+                                $"\"{info.Maps[i].Name}\" from {(info.Maps[i].Parent != -1 ? info.Maps[i].Parent.ToString() : "ROOT")} " +
+                                $"{(info.Maps[i].D ? "[DELETED]" : "")}");
                         }
                         else
                         {
-                            Console.WriteLine($"[{info.Maps[i].Time}] {info.Maps[i].Index.ToString().PadLeft(idx)}: " +
-                                $"\"{info.Maps[i].Name}\" by {(info.Maps[i].Parent != -1 ? info.Maps[i].Parent.ToString() : "ROOT")}");
-                            Console.WriteLine("This commit is empty");
+                            ZipFile.ExtractToDirectory(zip, tempDir);
+
+                            DirectoryInfo dirInfo = new DirectoryInfo(tempDir);
+
+                            if (dirInfo.Exists)
+                            {
+                                Console.WriteLine($"[{info.Maps[i].Time}] {info.Maps[i].Index.ToString().PadLeft(idx)}: " +
+                                    $"\"{info.Maps[i].Name}\" from {(info.Maps[i].Parent != -1 ? info.Maps[i].Parent.ToString() : "ROOT")} " +
+                                    $"{(info.Maps[i].D ? "[DELETED]" : "")}");
+
+                                ShowDir(dirInfo, 1, new List<int>());
+
+                                Directory.Delete(tempDir, true);
+                            }
+                            else
+                            {
+                                Console.WriteLine($"[{info.Maps[i].Time}] {info.Maps[i].Index.ToString().PadLeft(idx)}: " +
+                                    $"\"{info.Maps[i].Name}\" from {(info.Maps[i].Parent != -1 ? info.Maps[i].Parent.ToString() : "ROOT")} " +
+                                    $"{(info.Maps[i].D ? "[DELETED]" : "")}");
+
+                                Console.WriteLine(Messages.CommitEmpty);
+                            }
                         }
                     }
+
+                    Console.WriteLine();
                 }
             }
             else

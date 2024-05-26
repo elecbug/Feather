@@ -1,5 +1,5 @@
 ﻿using Feather.Resources;
-using Feather.Structs;
+using System.Diagnostics;
 using System.IO.Compression;
 
 namespace Feather.Commands
@@ -68,10 +68,14 @@ namespace Feather.Commands
 
                 try
                 {
-                    using (StreamReader stream = new StreamReader(Path.Combine(tempDir, file)))
+                    //Console.WriteLine("Run " + Path.Combine(tempDir, file));
+                    Process.Start(new ProcessStartInfo()
                     {
-                        Console.WriteLine(stream.ReadToEnd());
-                    }
+                        FileName = "CMD",
+                        Arguments = "/C " + Path.Combine(tempDir, file),
+                    });
+
+                    Console.WriteLine();
                 }
                 catch
                 {
